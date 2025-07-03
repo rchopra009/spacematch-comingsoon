@@ -14,13 +14,19 @@
         }
         
         :root {
-            --bg-color: #faf9f7;
-            --text-primary: #1a1a1a;
-            --text-secondary: #4a4a4a;
-            --accent: #8b7355;
-            --accent-light: #a68b5b;
-            --border: #e5e5e5;
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            /* Modern vibrant color scheme */
+            --bg-color: #0a0a0f;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --accent: #8b5cf6;
+            --accent-light: #a78bfa;
+            --accent-dark: #7c3aed;
+            --cta-primary: #06b6d4;
+            --cta-hover: #0891b2;
+            --border: #27272a;
+            --card-bg: #18181b;
+            --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+            --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
         }
         
         body {
@@ -41,50 +47,51 @@
             position: relative;
         }
         
-        /* Subtle animated background */
+        /* Enhanced animated background */
         .background-animation {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            opacity: 0.03;
-            background: linear-gradient(45deg, transparent 30%, var(--accent) 50%, transparent 70%);
-            background-size: 200% 200%;
-            animation: subtle-flow 20s ease-in-out infinite;
+            opacity: 0.1;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 50%, var(--cta-primary) 100%);
+            background-size: 400% 400%;
+            animation: gradient-flow 15s ease infinite;
             z-index: -1;
         }
         
-        @keyframes subtle-flow {
-            0%, 100% { background-position: 0% 50%; }
+        @keyframes gradient-flow {
+            0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
-        /* Grid pattern overlay */
+        /* Modern grid pattern */
         .grid-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            opacity: 0.02;
+            opacity: 0.05;
             background-image: 
                 linear-gradient(var(--accent) 1px, transparent 1px),
                 linear-gradient(90deg, var(--accent) 1px, transparent 1px);
-            background-size: 50px 50px;
+            background-size: 40px 40px;
             z-index: -1;
-            animation: grid-shift 30s linear infinite;
+            animation: grid-pulse 20s linear infinite;
         }
         
-        @keyframes grid-shift {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
+        @keyframes grid-pulse {
+            0%, 100% { opacity: 0.05; }
+            50% { opacity: 0.08; }
         }
         
         /* Main content */
         .content {
             text-align: center;
-            max-width: 800px;
+            max-width: 900px;
             z-index: 1;
         }
         
@@ -99,32 +106,87 @@
         
         .hook .highlight {
             color: var(--accent);
-            font-weight: 400;
+            font-weight: 500;
+            position: relative;
         }
         
-        /* Logo */
+        .hook .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            border-radius: 2px;
+            opacity: 0.3;
+        }
+        
+        /* Enhanced Logo Design */
         .logo {
             margin: 3rem 0;
             opacity: 0;
             animation: fade-in-up 1s ease-out 1.5s forwards;
+            position: relative;
         }
         
-        .logo img {
-            max-width: 400px;
-            width: 100%;
-            height: auto;
-            filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.1));
-            transition: transform 0.3s ease;
+        .logo h1 {
+            font-size: clamp(3.5rem, 7vw, 6rem);
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 50%, var(--cta-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
         
-        .logo img:hover {
-            transform: scale(1.05);
+        .logo h1::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(135deg, var(--accent-light), var(--cta-primary));
+            border-radius: 20px;
+            opacity: 0.15;
+            z-index: -1;
+            animation: logo-glow 3s ease-in-out infinite alternate;
         }
         
-        @media (max-width: 768px) {
-            .logo img {
-                max-width: 280px;
-            }
+        .logo h1::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            width: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light), var(--cta-primary));
+            border-radius: 2px;
+            animation: underline-expand 2s ease-out 2s forwards;
+        }
+        
+        @keyframes logo-glow {
+            0% { opacity: 0.15; transform: scale(1); }
+            100% { opacity: 0.25; transform: scale(1.02); }
+        }
+        
+        @keyframes underline-expand {
+            to { width: 100%; }
+        }
+        
+        .country-tag {
+            font-size: 1.1rem;
+            color: var(--accent);
+            font-weight: 500;
+            font-style: italic;
+            margin-top: 0.5rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
         
         .sub-headline {
@@ -145,48 +207,10 @@
             animation: fade-in-up 1s ease-out 2.5s forwards;
         }
         
-        /* CTA Section */
+        /* Enhanced CTA Section */
         .cta-section {
             opacity: 0;
             animation: fade-in-up 1s ease-out 3s forwards;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            background: var(--text-primary);
-            color: white;
-            padding: 1rem 2.5rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            margin-bottom: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s ease;
-        }
-        
-        .cta-button:hover::before {
-            left: 100%;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-            background: var(--accent);
         }
         
         .email-form {
@@ -196,99 +220,156 @@
             align-items: center;
             margin-bottom: 2rem;
             flex-wrap: wrap;
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-light);
+            border: 1px solid var(--border);
         }
         
         .email-input {
-            padding: 1rem 1.5rem;
+            padding: 1.2rem 1.5rem;
             border: 2px solid var(--border);
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 1rem;
-            background: white;
-            min-width: 300px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            min-width: 320px;
             transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .email-input::placeholder {
+            color: var(--text-secondary);
         }
         
         .email-input:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
-        }
-        
-        .submit-btn {
-            padding: 1rem 2rem;
-            background: var(--text-primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .submit-btn:hover {
-            background: var(--accent);
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2);
             transform: translateY(-2px);
         }
         
+        .submit-btn {
+            padding: 1.2rem 2.5rem;
+            background: linear-gradient(135deg, var(--cta-primary), var(--cta-hover));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        
+        /* Enhanced Incentives */
         .incentives {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
         
         .incentive-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow-light);
             border: 1px solid var(--border);
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .incentive-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
         }
         
         .incentive-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-8px);
             box-shadow: var(--shadow);
         }
         
+        .incentive-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
         .incentive-card h3 {
-            color: var(--accent);
-            font-size: 1.1rem;
+            color: var(--text-primary);
+            font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 1rem;
         }
         
         .incentive-card p {
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
         }
         
+        /* Fixed Footer */
         .footer {
             position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(24, 24, 27, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border);
+            padding: 1rem 2rem;
             display: flex;
+            justify-content: center;
             gap: 2rem;
             align-items: center;
-            opacity: 0.5;
-            transition: opacity 0.3s ease;
-        }
-        
-        .footer:hover {
-            opacity: 1;
+            z-index: 10;
         }
         
         .footer a {
             color: var(--text-secondary);
             text-decoration: none;
             font-size: 0.9rem;
-            transition: color 0.3s ease;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
         }
         
         .footer a:hover {
             color: var(--accent);
+            background: rgba(139, 92, 246, 0.1);
+            transform: translateY(-2px);
         }
         
         @keyframes fade-in-up {
@@ -304,9 +385,15 @@
         
         /* Responsive */
         @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+                padding-bottom: 6rem;
+            }
+            
             .email-form {
                 flex-direction: column;
                 align-items: stretch;
+                padding: 1rem;
             }
             
             .email-input {
@@ -315,22 +402,29 @@
             
             .incentives {
                 grid-template-columns: 1fr;
-                gap: 1rem;
+                gap: 1.5rem;
             }
             
             .incentive-card {
-                padding: 1.5rem;
+                padding: 2rem;
+            }
+            
+            .footer {
+                flex-wrap: wrap;
+                gap: 1rem;
+                padding: 1rem;
             }
         }
         
         .success-message {
             display: none;
-            background: linear-gradient(135deg, #d4edda, #c3e6cb);
-            color: #155724;
-            padding: 1rem 2rem;
-            border-radius: 8px;
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
             margin-top: 1rem;
-            border: 1px solid #c3e6cb;
+            border: 1px solid #22c55e;
+            font-weight: 500;
         }
         
         .success-message.show {
@@ -350,7 +444,8 @@
             </div>
             
             <div class="logo">
-                <img src="logo1.png" alt="Space Match India - Transforming Commercial Real Estate">
+                <h1>spacematch</h1>
+                <div class="country-tag">india</div>
             </div>
             
             <div class="sub-headline">
@@ -363,23 +458,25 @@
             
             <div class="cta-section">
                 <form class="email-form" id="earlyAccessForm">
-                    <input type="email" class="email-input" placeholder="Enter your email address" required>
-                    <button type="submit" class="submit-btn">Be First on the Grid</button>
+                    <input type="email" class="email-input" placeholder="Enter your email to claim your spot" required>
+                    <button type="submit" class="submit-btn">Get VIP Access</button>
                 </form>
                 
                 <div class="success-message" id="successMessage">
-                    🎉 Welcome to the future of CRE! You're now on the grid for early access.
+                    🎉 Congratulations! You're now part of the SpaceMatch India founding community. Check your email for exclusive access details.
                 </div>
                 
                 <div class="incentives">
                     <div class="incentive-card">
+                        <div class="icon">🏢</div>
                         <h3>For Agents & Brokers</h3>
-                        <p>Gain First-Claim access to exclusive leads. Be among the founding partners shaping India's CRE revolution.</p>
+                        <p>Get first-claim access to premium leads and join our founding partner program. Shape the future of Indian CRE while growing your business.</p>
                     </div>
                     
                     <div class="incentive-card">
-                        <h3>For Businesses (SMEs)</h3>
-                        <p>Find your perfect space, faster, with exclusive early inventory. Simplify your entire CRE journey with intelligent guidance.</p>
+                        <div class="icon">🚀</div>
+                        <h3>For Businesses</h3>
+                        <p>Find your perfect space faster with our AI-powered matching engine. Get priority access to exclusive inventory and intelligent guidance.</p>
                     </div>
                 </div>
             </div>
@@ -387,9 +484,9 @@
     </div>
     
     <div class="footer">
-        <a href="#privacy">Privacy Policy</a>
-        <a href="#linkedin">LinkedIn</a>
-        <a href="#contact">Contact</a>
+        <a href="mailto:privacy@spacematch.in">Privacy Policy</a>
+        <a href="https://linkedin.com/company/spacematch-india" target="_blank">LinkedIn</a>
+        <a href="mailto:hello@spacematch.in">Contact Us</a>
     </div>
     
     <script>
@@ -405,7 +502,7 @@
                 successMessage.classList.add('show');
                 this.style.display = 'none';
                 
-                // Optional: Show user type selection after 2 seconds
+                // Show user type selection after 2 seconds
                 setTimeout(() => {
                     showUserTypeSelection();
                 }, 2000);
@@ -415,11 +512,11 @@
         function showUserTypeSelection() {
             const userTypeDiv = document.createElement('div');
             userTypeDiv.innerHTML = `
-                <div style="margin-top: 2rem; padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);">
-                    <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Tell us about yourself:</h3>
+                <div style="margin-top: 2rem; padding: 2rem; background: var(--card-bg); border-radius: 16px; box-shadow: var(--shadow-light); border: 1px solid var(--border);">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--text-primary); font-size: 1.3rem;">Tell us about yourself to personalize your experience:</h3>
                     <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                        <button onclick="selectUserType('broker')" style="padding: 0.8rem 1.5rem; background: var(--text-primary); color: white; border: none; border-radius: 6px; cursor: pointer; transition: all 0.3s ease;">I'm a Broker/Agent</button>
-                        <button onclick="selectUserType('business')" style="padding: 0.8rem 1.5rem; background: var(--text-primary); color: white; border: none; border-radius: 6px; cursor: pointer; transition: all 0.3s ease;">I'm Looking for Space</button>
+                        <button onclick="selectUserType('broker')" style="padding: 1rem 2rem; background: linear-gradient(135deg, var(--cta-primary), var(--cta-hover)); color: white; border: none; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; font-size: 1rem;">I'm a Broker/Agent</button>
+                        <button onclick="selectUserType('business')" style="padding: 1rem 2rem; background: linear-gradient(135deg, var(--accent), var(--accent-light)); color: white; border: none; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; font-size: 1rem;">I'm Looking for Space</button>
                     </div>
                 </div>
             `;
@@ -428,20 +525,13 @@
         }
         
         function selectUserType(type) {
-            const message = type === 'broker' ? 
-                "Perfect! You'll be among the first to access our exclusive lead generation platform." :
-                "Excellent! You'll get priority access to our curated space inventory and AI-powered matching.";
+            const messages = {
+                broker: "🎯 Perfect! You'll receive exclusive access to our premium lead generation platform and founding partner benefits. Welcome to the future of CRE!",
+                business: "🏢 Excellent! You'll get priority access to our curated space inventory, AI-powered matching, and personalized guidance. Your perfect space awaits!"
+            };
             
-            alert(message);
+            alert(messages[type]);
         }
-        
-        // Smooth scrolling for footer links
-        document.querySelectorAll('.footer a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                // Add your navigation logic here
-            });
-        });
     </script>
 </body>
 </html>
