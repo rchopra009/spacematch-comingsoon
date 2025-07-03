@@ -4,328 +4,461 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SpaceMatch India - The Grid is Changing</title>
-    <!-- Tailwind CSS CDN for utility classes -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts - Inter for clean, modern typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Base Styles & Font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --bg-color: #faf9f7;
+            --text-primary: #1a1a1a;
+            --text-secondary: #4a4a4a;
+            --accent: #8b7355;
+            --accent-light: #a68b5b;
+            --border: #e5e5e5;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+        
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f0f0f; /* Near black for dramatic contrast */
-            color: #e0e0e0; /* Soft white for text */
-            overflow: hidden; /* Hide scrollbars for background effects */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
             justify-content: center;
             align-items: center;
+            padding: 2rem;
             position: relative;
         }
-
-        /* Abstract Background Grid/Flow Effect */
-        body::before {
-            content: '';
-            position: absolute;
+        
+        /* Subtle animated background */
+        .background-animation {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background:
-                linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px; /* Adjust grid size */
-            opacity: 0.1;
+            opacity: 0.03;
+            background: linear-gradient(45deg, transparent 30%, var(--accent) 50%, transparent 70%);
+            background-size: 200% 200%;
+            animation: subtle-flow 20s ease-in-out infinite;
             z-index: -1;
-            animation: gridFlow 60s linear infinite; /* Slow, continuous flow */
         }
-
-        @keyframes gridFlow {
-            from { background-position: 0 0; }
-            to { background-position: 50px 50px; } /* Shifts by one grid cell */
+        
+        @keyframes subtle-flow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
-
-        /* Overlay for subtle light effect */
-        body::after {
-            content: '';
-            position: absolute;
+        
+        /* Grid pattern overlay */
+        .grid-overlay {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 70%);
-            opacity: 0.3;
+            opacity: 0.02;
+            background-image: 
+                linear-gradient(var(--accent) 1px, transparent 1px),
+                linear-gradient(90deg, var(--accent) 1px, transparent 1px);
+            background-size: 50px 50px;
             z-index: -1;
+            animation: grid-shift 30s linear infinite;
         }
-
-        /* Hook Text Animation */
-        .hook-word {
+        
+        @keyframes grid-shift {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        /* Main content */
+        .content {
+            text-align: center;
+            max-width: 800px;
+            z-index: 1;
+        }
+        
+        .hook {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 2rem;
             opacity: 0;
-            transform: translateY(20px);
-            display: inline-block; /* Allows individual animation */
-            animation: slideUpFadeIn 0.8s ease-out forwards;
+            animation: fade-in-up 1s ease-out 0.5s forwards;
         }
-        .hook-word:nth-child(1) { animation-delay: 0.5s; }
-        .hook-word:nth-child(2) { animation-delay: 0.7s; }
-        .hook-word:nth-child(3) { animation-delay: 0.9s; }
-        .hook-word:nth-child(4) { animation-delay: 1.1s; } /* "Not" */
-        .hook-word:nth-child(5) { animation-delay: 1.3s; } /* "Anymore." */
-
-        @keyframes slideUpFadeIn {
+        
+        .hook .highlight {
+            color: var(--accent);
+            font-weight: 400;
+        }
+        
+        /* Logo */
+        .logo {
+            margin: 3rem 0;
+            opacity: 0;
+            animation: fade-in-up 1s ease-out 1.5s forwards;
+        }
+        
+        .logo h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 400;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .logo h1::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            animation: underline-expand 2s ease-out 2s forwards;
+        }
+        
+        @keyframes underline-expand {
+            to { width: 100%; }
+        }
+        
+        .country-tag {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-top: 0.5rem;
+            opacity: 0.7;
+        }
+        
+        .sub-headline {
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            font-weight: 500;
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+            opacity: 0;
+            animation: fade-in-up 1s ease-out 2s forwards;
+        }
+        
+        .body-copy {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.7;
+            opacity: 0;
+            animation: fade-in-up 1s ease-out 2.5s forwards;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            opacity: 0;
+            animation: fade-in-up 1s ease-out 3s forwards;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: var(--text-primary);
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+            background: var(--accent);
+        }
+        
+        .email-form {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .email-input {
+            padding: 1rem 1.5rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+            min-width: 300px;
+            transition: all 0.3s ease;
+        }
+        
+        .email-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
+        }
+        
+        .submit-btn {
+            padding: 1rem 2rem;
+            background: var(--text-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+        }
+        
+        .incentives {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .incentive-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        
+        .incentive-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+        
+        .incentive-card h3 {
+            color: var(--accent);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .incentive-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        .footer {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+        
+        .footer:hover {
+            opacity: 1;
+        }
+        
+        .footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        
+        .footer a:hover {
+            color: var(--accent);
+        }
+        
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-
-        /* SpaceMatch Logo Animation */
-        .spacematch-logo {
-            font-family: 'Inter', sans-serif;
-            font-weight: 700; /* Bold for impact */
-            font-size: 5rem; /* Larger for presence */
-            line-height: 1;
-            letter-spacing: -0.06em; /* Tighter for continuous feel */
-            text-transform: lowercase;
-            color: #fefefe; /* Bright white for contrast against dark background */
-            position: relative;
-            display: inline-block;
-            opacity: 0;
-            transform: scale(0.9);
-            animation: logoScaleIn 1.5s cubic-bezier(0.23, 1, 0.32, 1) 1.8s forwards; /* More fluid animation */
-            text-shadow: 0 0 15px rgba(255,255,255,0.2); /* Subtle glow */
-        }
-
-        @keyframes logoScaleIn {
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        /* Country Tag Styling */
-        .country-tag {
-            font-size: 0.9rem;
-            font-style: italic;
-            color: #a0a0a0; /* Softer grey */
-            position: absolute;
-            bottom: -1rem;
-            right: 0;
-            white-space: nowrap;
-            opacity: 0;
-            animation: fadeIn 1.5s ease-out 2.5s forwards; /* Delayed fade-in */
-        }
-
-        /* General Fade-In for subsequent content */
-        .content-reveal {
-            opacity: 0;
-            animation: fadeIn 1.5s ease-out 3s forwards;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        /* CTA Button Styling */
-        .cta-button {
-            background: linear-gradient(90deg, #4a4a4a 0%, #262626 100%); /* Dark gradient */
-            color: #fefefe;
-            font-weight: 600;
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
-        }
-
-        .cta-button:hover {
-            background: linear-gradient(90deg, #5a5a5a 0%, #363636 100%);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .cta-button:active {
-            transform: translateY(0);
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Input Field Styling */
-        .email-input {
-            background-color: rgba(255, 255, 255, 0.08); /* Translucent background */
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #fefefe;
-            transition: all 0.3s ease;
-        }
-        .email-input::placeholder {
-            color: #a0a0a0; /* Lighter placeholder text */
-        }
-        .email-input:focus {
-            outline: none;
-            border-color: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
-            background-color: rgba(255, 255, 255, 0.12);
-        }
-
-        /* Incentive Boxes */
-        .incentive-box {
-            background-color: rgba(255, 255, 255, 0.05); /* Very subtle translucent background */
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            color: #e0e0e0;
-        }
-
-        /* Message Box */
-        .message-box {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.9);
-            color: white;
-            padding: 20px 30px;
-            border-radius: 10px;
-            text-align: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .message-box.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Responsive Adjustments */
+        
+        /* Responsive */
         @media (max-width: 768px) {
-            .spacematch-logo {
-                font-size: 3.5rem; /* Smaller on mobile */
-            }
-            .country-tag {
-                font-size: 0.8rem;
-                bottom: -0.8rem;
-            }
-            .main-headline {
-                font-size: 2.25rem; /* text-4xl */
-                line-height: 1.2;
-            }
-            .sub-headline {
-                font-size: 1.125rem; /* text-lg */
-            }
-            .cta-title {
-                font-size: 1.75rem; /* text-3xl */
-            }
-            .incentive-text {
-                font-size: 0.875rem; /* text-sm */
-            }
-            .flex-col-mobile {
+            .email-form {
                 flex-direction: column;
+                align-items: stretch;
             }
+            
+            .email-input {
+                min-width: auto;
+            }
+            
+            .incentives {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .incentive-card {
+                padding: 1.5rem;
+            }
+        }
+        
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            color: #155724;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .success-message.show {
+            display: block;
+            animation: fade-in-up 0.5s ease-out;
         }
     </style>
 </head>
 <body>
-
-    <!-- Main Content Area -->
-    <main class="flex flex-col items-center justify-center text-center max-w-4xl mx-auto px-4 py-12 z-10">
-
-        <!-- Hook -->
-        <h1 class="main-headline text-4xl md:text-6xl font-light text-gray-100 mb-8 leading-tight">
-            <span class="hook-word">Outdated.</span>
-            <span class="hook-word">Fragmented.</span>
-            <span class="hook-word">Slow.</span>
-            <span class="font-bold text-white hook-word">Not Anymore.</span>
-        </h1>
-
-        <!-- Logo -->
-        <div class="relative mb-12">
-            <span class="spacematch-logo">spacematch</span>
-            <span class="country-tag">India</span>
-        </div>
-
-        <!-- Sub-Headline -->
-        <p class="sub-headline text-xl md:text-2xl font-normal text-gray-300 mb-10 content-reveal">
-            India's Commercial Real Estate is About to Experience a Breakthrough.
-        </p>
-
-        <!-- CTA Section -->
-        <div class="w-full max-w-md content-reveal">
-            <h2 class="cta-title text-3xl md:text-4xl font-extrabold text-white mb-6">
-                Be First on the Grid. Get Early Access.
-            </h2>
-
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-                <input
-                    type="email"
-                    id="emailInput"
-                    placeholder="Your Email Address"
-                    class="email-input flex-grow w-full sm:w-auto px-6 py-3 rounded-xl focus:ring-0 text-white placeholder-gray-400"
-                />
-                <button
-                    id="signUpButton"
-                    class="cta-button w-full sm:w-auto px-8 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
-                >
-                    Sign Up Now
-                </button>
+    <div class="background-animation"></div>
+    <div class="grid-overlay"></div>
+    
+    <div class="container">
+        <div class="content">
+            <div class="hook">
+                Outdated. Fragmented. Slow. <span class="highlight">Not Anymore.</span>
             </div>
-
-            <!-- Incentive Language -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left w-full">
-                <div class="incentive-box p-5 rounded-xl">
-                    <h3 class="text-xl font-semibold mb-2">For Agents:</h3>
-                    <p class="incentive-text text-gray-300">
-                        **Secure your competitive edge.** Gain **First-Claim access** to exclusive, verified leads powered by AI. Streamline your entire workflow, from intelligent matching to seamless deal closure, and **multiply your efficiency** in India's dynamic CRE market.
-                    </p>
+            
+            <div class="logo">
+                <h1>spacematch</h1>
+                <div class="country-tag">india</div>
+            </div>
+            
+            <div class="sub-headline">
+                India's Commercial Real Estate is About to Experience a Breakthrough.
+            </div>
+            
+            <div class="body-copy">
+                We are fusing cutting-edge AI with an intuitive, end-to-end workflow to transform how spaces are found, matched, and transacted. For brokers, for businesses, for the future of CRE.
+            </div>
+            
+            <div class="cta-section">
+                <form class="email-form" id="earlyAccessForm">
+                    <input type="email" class="email-input" placeholder="Enter your email address" required>
+                    <button type="submit" class="submit-btn">Be First on the Grid</button>
+                </form>
+                
+                <div class="success-message" id="successMessage">
+                    🎉 Welcome to the future of CRE! You're now on the grid for early access.
                 </div>
-                <div class="incentive-box p-5 rounded-xl">
-                    <h3 class="text-xl font-semibold mb-2">For Businesses (SMEs):</h3>
-                    <p class="incentive-text text-gray-300">
-                        **Discover your ideal space, effortlessly.** Access exclusive early inventory and leverage AI-powered precision to find the perfect commercial property, faster than ever. Navigate the entire process with intelligent guidance, **saving time and maximizing your investment.**
-                    </p>
+                
+                <div class="incentives">
+                    <div class="incentive-card">
+                        <h3>For Agents & Brokers</h3>
+                        <p>Gain First-Claim access to exclusive leads. Be among the founding partners shaping India's CRE revolution.</p>
+                    </div>
+                    
+                    <div class="incentive-card">
+                        <h3>For Businesses (SMEs)</h3>
+                        <p>Find your perfect space, faster, with exclusive early inventory. Simplify your entire CRE journey with intelligent guidance.</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </main>
-
-    <!-- Message Box -->
-    <div id="messageBox" class="message-box">
-        <p id="messageText"></p>
     </div>
-
-    <!-- Footer -->
-    <footer class="absolute bottom-4 left-0 right-0 text-center text-gray-500 text-sm content-reveal z-10">
-        <p>&copy; 2025 SpaceMatch. All rights reserved.</p>
-        <div class="mt-2">
-            <a href="#" class="text-gray-400 hover:text-white transition mx-2">Privacy Policy</a>
-            <a href="#" class="text-gray-400 hover:text-white transition mx-2">Terms of Service</a>
-        </div>
-        <!-- Social Media Icons (Lucide Icons via SVG for single file) -->
-        <div class="mt-4 flex justify-center space-x-4">
-            <a href="#" class="text-gray-400 hover:text-white transition"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></a>
-            <a href="#" class="text-gray-400 hover:text-white transition"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17-19 11.6 1.1.8 3 1.5 3.9 1.5 3.2 0 5.2-2 6.6-3.6C12 10.8 10.3 10 9.4 9.2c-.7-.7-.4-1.4-.2-1.7 1.7-.3 4.4-.7 5.2-1.7 2.1-2.2 4.4-4.2 5.2-4.2Z"/></svg></a>
-        </div>
-    </footer>
-
+    
+    <div class="footer">
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#linkedin">LinkedIn</a>
+        <a href="#contact">Contact</a>
+    </div>
+    
     <script>
-        document.getElementById('signUpButton').addEventListener('click', function() {
-            const emailInput = document.getElementById('emailInput');
-            const email = emailInput.value;
-            const messageBox = document.getElementById('messageBox');
-            const messageText = document.getElementById('messageText');
-
-            if (email && email.includes('@') && email.includes('.')) {
-                messageText.textContent = "Thank you for joining the grid! We'll be in touch soon with exclusive access.";
-                messageBox.classList.add('show');
-                emailInput.value = ''; // Clear the input field
+        // Email form submission
+        document.getElementById('earlyAccessForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = this.querySelector('input[type="email"]').value;
+            const successMessage = document.getElementById('successMessage');
+            
+            // Simulate form submission
+            setTimeout(() => {
+                successMessage.classList.add('show');
+                this.style.display = 'none';
+                
+                // Optional: Show user type selection after 2 seconds
                 setTimeout(() => {
-                    messageBox.classList.remove('show');
-                }, 3500); // Hide after 3.5 seconds
-            } else {
-                messageText.textContent = "Please enter a valid email address to get on the grid.";
-                messageBox.classList.add('show');
-                setTimeout(() => {
-                    messageBox.classList.remove('show');
-                }, 3500);
-            }
+                    showUserTypeSelection();
+                }, 2000);
+            }, 500);
+        });
+        
+        function showUserTypeSelection() {
+            const userTypeDiv = document.createElement('div');
+            userTypeDiv.innerHTML = `
+                <div style="margin-top: 2rem; padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);">
+                    <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Tell us about yourself:</h3>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <button onclick="selectUserType('broker')" style="padding: 0.8rem 1.5rem; background: var(--text-primary); color: white; border: none; border-radius: 6px; cursor: pointer; transition: all 0.3s ease;">I'm a Broker/Agent</button>
+                        <button onclick="selectUserType('business')" style="padding: 0.8rem 1.5rem; background: var(--text-primary); color: white; border: none; border-radius: 6px; cursor: pointer; transition: all 0.3s ease;">I'm Looking for Space</button>
+                    </div>
+                </div>
+            `;
+            
+            document.querySelector('.cta-section').appendChild(userTypeDiv);
+        }
+        
+        function selectUserType(type) {
+            const message = type === 'broker' ? 
+                "Perfect! You'll be among the first to access our exclusive lead generation platform." :
+                "Excellent! You'll get priority access to our curated space inventory and AI-powered matching.";
+            
+            alert(message);
+        }
+        
+        // Smooth scrolling for footer links
+        document.querySelectorAll('.footer a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Add your navigation logic here
+            });
         });
     </script>
 </body>
